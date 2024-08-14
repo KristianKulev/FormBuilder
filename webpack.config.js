@@ -1,6 +1,6 @@
-// webpack.config.js
 const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
+const CopyWebpackPlugin = require("copy-webpack-plugin");
 
 module.exports = {
   entry: "./src/index.js",
@@ -8,6 +8,7 @@ module.exports = {
     path: path.resolve(__dirname, "dist"),
     filename: "bundle.js",
     publicPath: "/",
+    assetModuleFilename: "assets/images/[name].[hash][ext][query]",
   },
   module: {
     rules: [
@@ -24,9 +25,11 @@ module.exports = {
         exclude: /node_modules/,
       },
       {
-        test: /\.(svg|png|jpg|jpeg|gif|ico)$/,
-        exclude: /node_modules/,
-        use: ["url-loader"],
+        test: /\.(svg|png|jpg|jpeg|gif|ico)$/i,
+        type: "asset/resource",
+        generator: {
+          filename: "assets/images/[name].[hash][ext]",
+        },
       },
     ],
   },
@@ -37,13 +40,16 @@ module.exports = {
     new HtmlWebpackPlugin({
       template: "./public/index.html",
     }),
+    new CopyWebpackPlugin({
+      patterns: [{ from: "public/assets", to: "assets" }],
+    }),
   ],
   devServer: {
     static: {
       directory: path.join(__dirname, "public"),
     },
     compress: true,
-    port: 3000, // default 8000,
+    port: 3000,
     historyApiFallback: true,
     hot: true,
   },

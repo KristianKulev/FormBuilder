@@ -9,7 +9,10 @@ const MainHeader = () => {
      items-center bg-secondary py-4 px-4 md:px-12"
     >
       <Link to={"/"}>
-        <img src="/Quickbase-logo-color.png" className="w-48 py-2 mr-12" />
+        <img
+          src="assets/images/Quickbase-logo-color.png"
+          className="w-48 py-2 mr-12"
+        />
       </Link>
       <h1 className="text-xl font-bold">Kristian Kulev - Field Builder</h1>
     </header>
